@@ -33,7 +33,7 @@ export default {
   mounted(){
     //   创建BScroll对象
       this.scroll = new BScroll(this.$refs.wrapper,{
-         click:true,
+         click:true, 
          probeType: this.probeType,
          pullUpLoad: this.pullUpLoad
       })
@@ -43,18 +43,22 @@ export default {
           
       })
       //监听上拉事件
-        this.scroll.on('pullingUp', () => {
-            this.$emit('pullingUp')
-            
-        })
+        // this.scroll.on('pullingUp', () => {
+        //     this.$emit('pullingUp')
+        // })
 
   },
   methods:{
       scrollTo(x,y,time=300){
-          this.scroll.scrollTo(x,y,time)
+          this.scroll && this.scroll.scrollTo(x,y,time)
       },
-      finishPullUp(){
-          this.scroll.finishPullUp()
+    //   finishPullUp(){
+    //       this.scroll.finishPullUp()
+    //   },
+      refresh(){
+          console.log(111);
+          
+         this.scroll && this.scroll.refresh()
       }
   }
  

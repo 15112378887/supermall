@@ -7,7 +7,7 @@
 
     <scroll class="content" ref="scroll" 
       :probe-type="3" @scroll="contentScroll" 
-      :pull-up-load="true" @pullingUp="loadMore"> 
+       :pull-up-load="true" > <!--@pullingUp="loadMore" -->
       <home-swiper :banners="banners"></home-swiper>
 
       <recommend-view :recommends="recommends"></recommend-view>
@@ -36,7 +36,7 @@ import Scroll from "components/common/scroll/Scroll";
 import BackTop from "components/content/bakcTop/BackTop"
 
 import { getHomeMultidata, getHomeGoods } from "network/home"; //default导出才可以去除大括号,网络请求的数据
-
+import {debounce} from 'common/until'
 export default {
   name: "home",
   components: {
@@ -72,6 +72,13 @@ export default {
     this.getHomeGoods("pop");
     this.getHomeGoods("new");
     this.getHomeGoods("sell");
+    
+  },
+  mounted(){
+    const refresh = debounce(this.$refs.scroll.refresh,110)
+    this.$bus.$on('itemImageLoad',() => {
+      refresh()
+    })
   },
   
   methods: {
@@ -95,11 +102,11 @@ export default {
     },
     contentScroll(position){
       this.isShowBackTop = -(position.y) > 1000
-      
     },
-    loadMore(){
-      this.getHomeGoods(this.currentType)
-    },
+    // loadMore(){
+    //   this.getHomeGoods(this.currentType)
+    // },
+
     // 网络请求方法
     getHomeMultidata() {
       getHomeMultidata().then(res => {
@@ -112,7 +119,7 @@ export default {
       getHomeGoods(type, page).then(res => {
         this.goods[type].list.push(...res.data.data.list);
         this.goods[type].page += 1;
-        this.$refs.scroll.finishPullUp()
+        // this.$refs.scroll.finishPullUp()
       });
     }
   }
@@ -137,7 +144,6 @@ export default {
 .tab-control {
   /* position: sticky; */
   top: 44px;
-  z-index: 9;
   background-color: #fff;
 }
 /* .content {

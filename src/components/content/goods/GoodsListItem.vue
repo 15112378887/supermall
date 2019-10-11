@@ -1,7 +1,7 @@
 <template>
      <div class="goods-item">
          <a :href="goodsItem.link">
-             <img :src="goodsItem.show.img" alt="">
+             <img :src="goodsItem.show.img" alt="" @load="itemImg">
              </a>
        
        <div class="goods-info">
@@ -26,6 +26,11 @@ export default {
                 default() {
                     return {}
                 }
+            }
+        },
+        methods:{
+            itemImg(){
+                this.$bus.$emit('itemImageLoad')
             }
         }
   
