@@ -16,7 +16,7 @@ export default {
     path: String,
     activeColor: {
       type: String,
-      default: 'red'
+      default: '#ff6580'
     }
   },
   data(){
@@ -55,12 +55,13 @@ export default {
     margin-top: 3px;
   }
     .tab-bar-item img{
-        height: 30px;
-        width: 30px;
+        height: 26px;
+        width: 26px;
         vertical-align: middle;
+        padding-bottom: 3px;
     }
     .active{
-      color: red;
+      color: pink;
     }
     
 </style>>
